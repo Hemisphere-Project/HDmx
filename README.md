@@ -1,14 +1,12 @@
 # HDmx
-Simple OSC controllable DMX interface - Python
+Simple OSC controllable DMX interface
 
 What is it
 -------------
 
-This is a python program listening OSC on port 3000, 
-and sending command to DMX USB Interfaces like Enttec DMXUSB Pro (tested).
+This is a python program listening OSC on port 3000, and sending command to a DMX USB Interface.
 
-It's based on Liblo / pyLiblo for the OSC communication 
-and pySerial + DmxPy for the DMX communication.
+It has been tested on RaspberryPi (Raspbian) with the Enttec DMXUSB Pro interface, but it should run ok on any unix environnement as long as liblo (>=0.26) and python are available. It should also support any DMX USB Pro compatible hardware like DmxKing ultraDMX devices. 
 
 
 Install
@@ -39,4 +37,36 @@ Configuration
 -------------
 
 You can edit the HDmx script using a text editor to change the port number, the serial interfaces, ...
-  
+We will provide more settings a launch time later (using command line arguments).
+
+
+Use
+-------------
+
+Plug your DMX-USB interface, and start HDmx !
+```
+  ./HDmx
+```
+
+You can now send OSC Command like this:
+```
+  /dmx/send <channel> <value>   : set channel (from 1 to 512) to value (from 0 to 255)
+  /dmx/blackout   : blackout every channels
+```
+
+
+
+Credits
+-------------
+
+HDmx is developped by Thomas BOHL (Maigre) from the Hemisphere-Project Team.
+
+HDmx is build on top of:
+```
+	* pySerial from Chris Liechti
+	* DmxPy from davepaul0 (embedded)
+	* Liblo from Steve Harris and Stephen Sinclair 
+	* pyLiblo from Dominic Sacré
+```
+and we thanks them for the hard work ;)
+
