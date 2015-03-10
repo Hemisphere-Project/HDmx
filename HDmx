@@ -18,9 +18,10 @@ except:
 
 def send(path, args):
     chan, val = args
+    val = int(round(val))
     dmx.setChannel(chan, val)
     dmx.render()
-    #print "received message '%s' with arguments '%d' and '%d'" % (path, chan, val)
+    #print "DMX '%d' at '%d'" % (chan, val)
 
 def blackout(path, args):
     dmx.blackout()
@@ -28,6 +29,7 @@ def blackout(path, args):
 
 # register methods
 server.add_method("/dmx/send", 'ii', send)
+server.add_method("/dmx/send", 'if', send)
 server.add_method("/dmx/blackout", None, blackout)
 
 # loop and dispatch messages every 20ms
