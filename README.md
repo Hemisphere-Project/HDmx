@@ -6,7 +6,7 @@ What is it
 
 This is a python program listening OSC on port 3000, and sending command to a DMX USB Interface.
 
-It has been tested on RaspberryPi (Raspbian) with the Enttec DMXUSB Pro interface, but it should run ok on any unix environnement as long as liblo (>=0.26) and python are available. It should also support any DMX USB Pro compatible hardware like DmxKing ultraDMX devices. 
+It has been tested on RaspberryPi (Raspbian) with the Enttec DMXUSB Pro interface, but it should run ok on any unix environnement as long as liblo (>=0.26), python and standard ftdi sio module are available. It should also support any DMX USB Pro compatible hardware like DmxKing ultraDMX devices. 
 
 
 Install
