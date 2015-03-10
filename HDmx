@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+import liblo, sys
+from DmxPy import DmxPy
+
+# create server, listening on port 3000
+try:
+    server = liblo.Server(3000)
+except liblo.ServerError, err:
+    print str(err)
+    sys.exit()
+
+try:
+    dmx = DmxPy('/dev/ttyUSB0')
+except:
+    print "Unable to open /dev/ttyUSB0"
+    sys.exit()
+
+def send(path, args):
+    chan, val = args
+    dmx.setChannel(chan, val)
+    dmx.render()
+    #print "received message '%s' with arguments '%d' and '%d'" % (path, chan, val)
+
+def blackout(path, args):
+    dmx.blackout()
+    dmx.render()
+
+# register methods
+server.add_method("/dmx/send", 'ii', send)
+server.add_method("/dmx/blackout", None, blackout)
+
+# loop and dispatch messages every 20ms
+while True:
+    server.recv(20)
