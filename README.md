@@ -1,5 +1,5 @@
 # HDmx
-Simple OSC controllable DMX interface
+Simple OSC to DMX interface
 
 What is it
 -------------
