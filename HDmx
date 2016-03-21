@@ -27,7 +27,7 @@ def blackout(path, args):
     dmx.blackout()
     dmx.render()
     print "DMX all off"
-    
+
 def allon(path, args):
     dmx.full()
     dmx.render()
