@@ -58,16 +58,30 @@ def send(path, args):
     val = int(round(val))
     dmx.setChannel(chan, val)
     dmx.render()
-    #print "DMX '%d' at '%d'" % (chan, val)
+    print "DMX '%d' at '%d'" % (chan, val)
 
 def blackout(path, args):
     dmx.blackout()
     dmx.render()
+    
+def allon(path, args):
+    for x in range(1, 512):
+    	dmx.setChannel(x, 255)
+    dmx.render()
+    print "DMX all on"
+
+def alloff(path, args):
+    for x in range(1, 512):
+    	dmx.setChannel(x, 0)
+    dmx.render()
+    print "DMX all off"
 
 # register methods
-server.add_method("/dmx/send", 'ii', send)
-server.add_method("/dmx/send", 'if', send)
+server.add_method("/dmx/set", 'ii', send)
+server.add_method("/dmx/set", 'if', send)
 server.add_method("/dmx/blackout", None, blackout)
+server.add_method("/dmx/all", None, allon)
+server.add_method("/dmx/off", None, alloff)
 
 # loop and dispatch messages every 20ms
 while True:

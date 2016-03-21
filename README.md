@@ -6,7 +6,7 @@ What is it
 
 This is a python program listening OSC on port 3000, and sending command to a DMX USB Interface.
 
-It has been tested on RaspberryPi (Raspbian) with the Enttec DMXUSB Pro interface, but it should run ok on any unix environnement as long as liblo (>=0.26), python and standard ftdi sio module are available. It should also support any DMX USB Pro compatible hardware like DmxKing ultraDMX devices. 
+It has been tested on RaspberryPi (Raspbian) with the Enttec DMXUSB Pro interface, but it should run ok on any unix environnement as long as liblo (>=0.26), python and standard ftdi sio module are available. It should also support any DMX USB Pro compatible hardware like DmxKing ultraDMX devices. Note that OpenDMX USB doesn't seems to work yet.
 
 
 Install
@@ -50,8 +50,11 @@ Plug your DMX-USB interface, and start HDmx !
 
 You can now send OSC Command like this:
 ```
-  /dmx/send <channel> <value>   : set channel (from 1 to 512) to value (from 0 to 255)
-  /dmx/blackout   				: blackout every channels
+  /dmx/set <channel> <value>   : set channel (from 1 to 512) to value (from 0 to 255)
+  /dmx/all						: set all channels to 255
+  /dmx/off						: set all channels to 0
+  /dmx/blackout   				: blackout every channels (using build in blackout)
+  
 ```
 
 
