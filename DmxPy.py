@@ -21,19 +21,14 @@ class DmxPy:
 		self.serial.write( DMXOPEN+DMXINIT2+DMXCLOSE)
 		self.dmxData=[chr(0)]*513   #128 plus "spacer".
 
-	def setChannel(self, chan, intensity):
+	def set(self, chan, intensity):
 		if chan > 512 : chan = 512
 		if chan < 0 : chan = 0
 		if intensity > 255 : intensity = 255
 		if intensity < 0 : intensity = 0
 		self.dmxData[chan] = chr(intensity)
 
-
-	def blackout(self):
-		for i in xrange (1, 512, 1):
-			self.dmxData[i] = chr(0)
-
-	def full(self, val=255):
+	def setall(self, val=255):
 		for i in xrange (1, 512, 1):
 			self.dmxData[i] = chr(val)
 

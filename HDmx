@@ -16,7 +16,7 @@ except:
     print "Unable to open /dev/ttyUSB0"
     sys.exit()
 
-def send(path, args):
+def set(path, args):
     chan, val = args
     val = int(round(val))
     dmx.setChannel(chan, val)
@@ -24,26 +24,28 @@ def send(path, args):
     print "DMX '%d' at '%d'" % (chan, val)
 
 def blackout(path, args):
-    dmx.blackout()
+    dmx.setall(0)
     dmx.render()
     print "DMX all off"
 
-def allon(path, args):
+def setall(path, args):
     if len(args) > 0:
         val = int(round(args[0]))
     else:
         val = 255
-    dmx.full(val)
+    dmx.setall(val)
     dmx.render()
     print "DMX all on"
 
 # register methods
-server.add_method("/dmx/set", 'ii', send)
-server.add_method("/dmx/set", 'if', send)
-server.add_method("/dmx/blackout", None, blackout)
-server.add_method("/dmx/all", None, allon)
-server.add_method("/dmx/all", 'i', allon)
+server.add_method("/dmx/set", 'ii', set)
+server.add_method("/dmx/set", 'if', set)
+
+server.add_method("/dmx/full", None, allon)
+server.add_method("/dmx/setall", 'i', allon)
+
 server.add_method("/dmx/off", None, blackout)
+server.add_method("/dmx/blackout", None, blackout)
 
 # loop and dispatch messages every 20ms
 while True:
