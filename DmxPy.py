@@ -33,9 +33,9 @@ class DmxPy:
 		for i in xrange (1, 512, 1):
 			self.dmxData[i] = chr(0)
 
-	def full(self):
+	def full(self, val=255):
 		for i in xrange (1, 512, 1):
-			self.dmxData[i] = chr(255)
+			self.dmxData[i] = chr(val)
 
 	def render(self):
 		sdata=''.join(self.dmxData)

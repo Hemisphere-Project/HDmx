@@ -29,7 +29,11 @@ def blackout(path, args):
     print "DMX all off"
 
 def allon(path, args):
-    dmx.full()
+    if len(args) > 0:
+        val = int(round(args[0]))
+    else:
+        val = 255
+    dmx.full(val)
     dmx.render()
     print "DMX all on"
 
@@ -38,6 +42,7 @@ server.add_method("/dmx/set", 'ii', send)
 server.add_method("/dmx/set", 'if', send)
 server.add_method("/dmx/blackout", None, blackout)
 server.add_method("/dmx/all", None, allon)
+server.add_method("/dmx/all", i, allon)
 server.add_method("/dmx/off", None, blackout)
 
 # loop and dispatch messages every 20ms
