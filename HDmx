@@ -19,7 +19,7 @@ except:
 def set(path, args):
     chan, val = args
     val = int(round(val))
-    dmx.setChannel(chan, val)
+    dmx.set(chan, val)
     dmx.render()
     print "DMX '%d' at '%d'" % (chan, val)
 

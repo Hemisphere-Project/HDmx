@@ -23,7 +23,7 @@ class DmxPy:
 
 	def set(self, chan, intensity):
 		if chan > 512 : chan = 512
-		if chan < 0 : chan = 0
+		if chan < 1 : return
 		if intensity > 255 : intensity = 255
 		if intensity < 0 : intensity = 0
 		self.dmxData[chan] = chr(intensity)
