@@ -42,7 +42,7 @@ server.add_method("/dmx/set", 'ii', send)
 server.add_method("/dmx/set", 'if', send)
 server.add_method("/dmx/blackout", None, blackout)
 server.add_method("/dmx/all", None, allon)
-server.add_method("/dmx/all", i, allon)
+server.add_method("/dmx/all", 'i', allon)
 server.add_method("/dmx/off", None, blackout)
 
 # loop and dispatch messages every 20ms
