@@ -51,7 +51,8 @@ Plug your DMX-USB interface, and start HDmx !
 You can now send OSC Command like this:
 ```
   /dmx/set <channel> <value>   : set channel (from 1 to 512) to value (from 0 to 255)
-  /dmx/all						: set all channels to 255
+  /dmx/setall <value>		: set all channels to value (from 0 to 255)		
+  /dmx/full						: set all channels to 255
   /dmx/off						: set all channels to 0
   /dmx/blackout   				: blackout every channels (using build in blackout)
   
