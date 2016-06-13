@@ -4,6 +4,9 @@ import sys
 ###CODE IMPORTED FROM ##############
 #https://github.com/davepaul0/DmxPy#
 
+def hello():
+  print "Hello World!"
+
 DMXOPEN = chr(126)
 DMXCLOSE = chr(231)
 DMXINTENSITY=chr(6)+chr(1)+chr(2)
