@@ -18,12 +18,24 @@ except:
     print "Unable to open /dev/ttyUSB0"
     sys.exit()
 
-def set(path, args):	
+def set(path, args):
     chan, val = args
     val = int(round(val))
     dmx.set(chan, val)
     dmx.render()
-    print "DMX '%d' at '%d'" % (chan, val)
+    if chan == 1:
+        print "DMX '%d' at '%d'" % (chan, val)
+
+def setnorender(path, args):
+    chan, val = args
+    val = int(round(val))
+    dmx.set(chan, val)
+    if chan == 1:
+        print "DMX buffer '%d' at '%d'" % (chan, val)
+
+def render():
+    dmx.render()
+    print "DMX render"
 
 def blackout(path, args):
     dmx.setall(0)
@@ -43,6 +55,9 @@ def setall(path, args):
 server.add_method("/dmx/set", 'ii', set)
 server.add_method("/dmx/set", 'if', set)
 
+server.add_method("/dmx/buffer", 'ii', setnorender)
+server.add_method("/dmx/render", None, render)
+
 server.add_method("/dmx/full", None, setall)
 server.add_method("/dmx/setall", 'i', setall)
 
@@ -56,9 +71,9 @@ read_list = [sys.stdin]
 while True:
     # listen OSC
     server.recv(20)
-    
+
     # listen STDIN
-    if read_list:
+    '''if read_list:
 		ready = select.select(read_list, [], [], 0.2)[0]
 		if ready:
 			for file in ready:
@@ -67,30 +82,16 @@ while True:
 					read_list.remove(file)
 				elif line.rstrip(): # optional: skipping empty lines
 					command = line.rstrip().split(" ");
-					
+					print command
+
 					if command[0] == "/dmx/set" and len(command) == 3:
 						set(command[0], (int(command[1]), float(command[2])))
-						
+
 					elif command[0] == "/dmx/full":
 						setall(command[0], None)
-						
+
 					elif command[0] == "/dmx/setall" and len(command) == 2:
 						set(command[0], command[1])
-						
+
 					elif command[0] == "/dmx/off" or command[0] == "/dmx/blackout":
-						blackout(command[0], None)
-						
-					
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-    
+						blackout(command[0], None)'''
