@@ -2,20 +2,26 @@
 
 import liblo, sys,time
 import select
+import serial.tools.list_ports
 import DmxPy
+
+dmx = None
+
+def openDMX():
+    ports = list(serial.tools.list_ports.comports())
+    for p in ports:
+        if 'dmx usb pro' in p.description.lower():
+            print ('ENTTEC DMX USB Pro detected at ', p.device)
+            global dmx
+            dmx = DmxPy.DmxPy(p.device)
+    if not dmx:
+        print ('No device found..')
 
 # create server, listening on port 3000
 try:
     server = liblo.Server(3000)
 except liblo.ServerError, err:
     print str(err)
-    sys.exit()
-
-try:
-    dmx = DmxPy.DmxPy('/dev/ttyUSB0')
-    print "ENTTEC DMX Usb pro linked at /dev/ttyUSB0"
-except:
-    print "Unable to open /dev/ttyUSB0"
     sys.exit()
 
 def set(path, args):
@@ -69,29 +75,12 @@ read_list = [sys.stdin]
 
 # loop and dispatch messages every 20ms
 while True:
-    # listen OSC
-    server.recv(20)
 
-    # listen STDIN
-    '''if read_list:
-		ready = select.select(read_list, [], [], 0.2)[0]
-		if ready:
-			for file in ready:
-				line = file.readline()
-				if not line: # EOF, remove file from input list
-					read_list.remove(file)
-				elif line.rstrip(): # optional: skipping empty lines
-					command = line.rstrip().split(" ");
-					print command
+    if not dmx:
+        # open Interface
+        openDMX()
+        time.sleep(1)
 
-					if command[0] == "/dmx/set" and len(command) == 3:
-						set(command[0], (int(command[1]), float(command[2])))
-
-					elif command[0] == "/dmx/full":
-						setall(command[0], None)
-
-					elif command[0] == "/dmx/setall" and len(command) == 2:
-						set(command[0], command[1])
-
-					elif command[0] == "/dmx/off" or command[0] == "/dmx/blackout":
-						blackout(command[0], None)'''
+    else:
+        # listen OSC
+        server.recv(20)

@@ -12,7 +12,7 @@ sudo python setup.py install
 cd ..
 
 #OSC CTRL using Liblo and pyLiblo
-sudo apt-get install liblo-dev python-dev
+sudo apt-get install python-dev liblo-dev -y
 wget http://das.nasophon.de/download/pyliblo-0.9.2.tar.gz
 tar -zxvf pyliblo-0.9.2.tar.gz
 cd pyliblo-0.9.2
