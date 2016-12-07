@@ -7,11 +7,13 @@ import DmxPy
 
 dmx = None
 
+port = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
+
 def openDMX():
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
         if 'dmx usb pro' in p.description.lower():
-            print ('ENTTEC DMX USB Pro detected at ', p.device)
+            print ('ENTTEC DMX USB Pro detected at '+p.device)
             global dmx
             dmx = DmxPy.DmxPy(p.device)
     if not dmx:
@@ -19,7 +21,8 @@ def openDMX():
 
 # create server, listening on port 3000
 try:
-    server = liblo.Server(3000)
+    server = liblo.Server(port)
+    print ('OSC Server listening on port '+str(port))
 except liblo.ServerError, err:
     print str(err)
     sys.exit()
